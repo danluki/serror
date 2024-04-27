@@ -21,19 +21,19 @@ func GetHttpError(err error) error {
 func testHandler() error {
 	var err error
 	err = errors.NewObjectBadState("test", "test", "test")
+	e := GetHttpError(err)
+	if e != nil {
+		fmt.Println(e)
+	}
 
 	marshalledErr, err := serror.Marhal(err)
 	if err != nil {
-		return err
+		fmt.Println(err)
 	}
 
 	fmt.Println(string(marshalledErr))
 	err = errors.Unmarshal(marshalledErr)
 	fmt.Println(err)
-	e := GetHttpError(err)
-	if e != nil {
-		return e
-	}
 
 	return nil
 }

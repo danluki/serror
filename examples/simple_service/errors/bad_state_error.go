@@ -18,10 +18,10 @@ type ObjectBadState struct {
 	State      string
 }
 
-func NewObjectBadState(objectType, objectId, state string) *ObjectBadState {
+func NewObjectBadState(objectType, objectId, state string) ObjectBadState {
 	msg := fmt.Sprintf("%s in bad state: %s", objectType, state)
 
-	return &ObjectBadState{
+	return ObjectBadState{
 		Base: serror.Base{
 			Message: msg,
 			Type:    ErrObjectBadState,

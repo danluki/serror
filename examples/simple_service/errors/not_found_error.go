@@ -16,7 +16,7 @@ type NotFoundError struct {
 	Code int
 }
 
-func NewNotFoundError(msg string, args map[string]string) *NotFoundError {
+func NewNotFoundError(msg string, args map[string]string) NotFoundError {
 	var parsedMsg string
 
 	if msg == "" {
@@ -24,7 +24,7 @@ func NewNotFoundError(msg string, args map[string]string) *NotFoundError {
 	}
 	parsedMsg = serror.MustParseArgs(msg, args)
 
-	return &NotFoundError{
+	return NotFoundError{
 		Base: serror.Base{
 			Message: parsedMsg,
 			Type:    NotFoundErrorType,

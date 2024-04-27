@@ -22,9 +22,9 @@ func (e BadRequestError) Error() string {
 	return fmt.Sprintf("This is custom error message for test: %s", e.Message)
 }
 
-func NewBadRequestError(reason []string) *BadRequestError {
+func NewBadRequestError(reason []string) BadRequestError {
 	msg := "Bad request: " + strings.Join(reason, ", ")
-	return &BadRequestError{
+	return BadRequestError{
 		Base: serror.Base{
 			Message: msg,
 			Type:    BadRequestErrorType,
