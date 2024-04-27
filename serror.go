@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 type Base struct {
@@ -13,6 +14,32 @@ type Base struct {
 
 func (b Base) Error() string {
 	return fmt.Sprintf("%s: %s", b.Type, b.Message)
+}
+
+func ParseArgs(msg string, args map[string]string) (string, error) {
+	parsed := msg
+	for k, v := range args {
+		parsed = strings.ReplaceAll(parsed, "{{"+k+"}}", v)
+	}
+
+	if strings.Contains(parsed, "{{") {
+		return "", fmt.Errorf(
+			"message '%s' contains unreplaced placeholders, parsing result: '%s'",
+			msg,
+			parsed,
+		)
+	}
+
+	return parsed, nil
+}
+
+func MustParseArgs(msg string, args map[string]string) string {
+	parsed, err := ParseArgs(msg, args)
+	if err != nil {
+		panic(err)
+	}
+
+	return parsed
 }
 
 func Marhal(
